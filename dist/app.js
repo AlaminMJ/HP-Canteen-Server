@@ -11,7 +11,7 @@ var error_middleware_1 = require("./middlewares/error.middleware");
 var auth_1 = __importDefault(require("./routes/auth"));
 dotenv_1.default.config({ path: ".env" });
 var app = (0, express_1.default)();
-app.use((0, cors_1.default)({ origin: "*" }));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use("/api/auth", auth_1.default);
