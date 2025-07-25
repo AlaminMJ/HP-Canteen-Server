@@ -12,7 +12,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/api/auth", authRoute);
+app.use("/api/auth", authRoute);
 app.get("/api/health", (req, res) => {
   res.json({ health: "Ok" });
 });
