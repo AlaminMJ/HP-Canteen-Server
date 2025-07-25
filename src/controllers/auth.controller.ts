@@ -17,7 +17,37 @@ export const login = async (req: Request, res: Response) => {
 
   res.status(200).json({ accessToken, refreshToken, user: payload });
 };
+export const register = async (req: Request, res: Response) => {
+  try {
+    const { email, password, name } = req.body;
 
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+
+    // Create user
+    const newUser = await User.create({
+      email,
+      password,
+      name,
+    });
+
+    const payload = {
+      id: newUser._id,
+      email: newUser.email,
+      role: newUser.role,
+    };
+    const accessToken = signAccessToken(payload);
+    const refreshToken = signRefreshToken(payload);
+
+    res.status(201).json({ accessToken, refreshToken, user: payload });
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const refresh = (req: Request, res: Response) => {
   const { refreshToken } = req.body;
   if (!refreshToken || tokenBlacklist.has(refreshToken)) {

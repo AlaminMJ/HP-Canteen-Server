@@ -3,15 +3,21 @@ import {
   login,
   refresh,
   logout,
+  register,
   getProtectedData,
 } from "../controllers/auth.controller";
 import { authenticate } from "../middlewares/auth.middleware";
 import { validate } from "../middlewares/validate.middleware";
-import { loginSchema, refreshSchema } from "../schemas/auth.schema";
+import {
+  loginSchema,
+  refreshSchema,
+  registerSchema,
+} from "../schemas/auth.schema";
 
 const router = Router();
 
 router.post("/login", validate(loginSchema), login);
+router.post("/register", validate(registerSchema), register);
 router.post("/refresh", validate(refreshSchema), refresh);
 router.post("/logout", logout);
 router.get("/data/protected", authenticate, getProtectedData);
