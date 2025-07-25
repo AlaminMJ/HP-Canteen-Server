@@ -7,7 +7,7 @@ import authRoute from "./routes/auth";
 
 dotenv.config({ path: ".env" });
 const app = express();
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
